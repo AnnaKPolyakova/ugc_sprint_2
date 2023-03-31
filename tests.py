@@ -1,3 +1,5 @@
-class TestDocAPI:
+class Test:
+
     def test_doc_get(self):
-        assert 1 == True
+        """Return the pathname of the KOS root directory."""
+        assert 1 == 1
