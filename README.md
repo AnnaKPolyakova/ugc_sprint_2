@@ -1,7 +1,7 @@
  # Проектная работа 9 спринта
  
 
-![workflow status](https://github.com/AnnaKPolyakova/ugc_sprint_2/blob/main/.github/workflows/python-publish.yml/badge.svg)  
+![workflowr status](https://github.com/AnnaKPolyakova/ugc_sprint_2/blob/main/.github/workflows/python-publish.yml/badge.svg)  
 
 ![workflow status](https://github.com/AnnaKPolyakova/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 
