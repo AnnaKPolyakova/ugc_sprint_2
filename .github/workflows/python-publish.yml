@@ -7,15 +7,15 @@ on:
     branches: [ main ]
 
 jobs:
-  example_matrix:
+  checks:
     strategy:
       matrix:
         python-version: [ '3.7', '3.8', '3.9' ]
-  build:
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version:  ${{ matrix.python-version }}
