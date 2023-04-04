@@ -5,4 +5,6 @@
 
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)  
 
+[![mypy](https://img.shields.io/badge/style-wemake-000000.svg)](https://mypy-lang.org/)  
+
 Задания на спринт вы найдёте внутри тем.
