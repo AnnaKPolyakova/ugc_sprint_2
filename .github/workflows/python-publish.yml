@@ -27,7 +27,7 @@ jobs:
 
     - name: Lint with flake8
       run: |
-         flake8 . --select E,F --count --show-source --statistics --tee --format=html --htmldir output
+         flake8 . --format=html --htmldir output
 
     - name: Test with pytest
       run: |
