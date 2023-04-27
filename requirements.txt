@@ -74,7 +74,7 @@ sentry-sdk==1.19.1
 smmap==5.0.0
 snowballstemmer==2.2.0
 spectree==1.1.0
-stevedore==5.0.0
+stevedore==3.5.2
 tomli==2.0.1
 tomlkit==0.11.7
 typing_extensions==4.5.0
