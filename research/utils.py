@@ -2,7 +2,7 @@ import logging
 from datetime import datetime, timedelta
 from logging.config import dictConfig
 
-from research.test_settings import TESTS_COUNT
+from research.settings_for_testing import TESTS_COUNT
 
 logging_config = {
     "version": 1,

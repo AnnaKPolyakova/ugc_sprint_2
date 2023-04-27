@@ -7,7 +7,7 @@ from research.mongodb.data_lists_generators import (
     get_bookmark_list_of_dict,
     get_movie_ratings_list_of_dict,
 )
-from research.test_settings import (
+from research.settings_for_testing import (
     OBJECT_COUNTS_INSERT_IN_ONE_TIME,
     USER_ID, TESTS_COUNT,
 )

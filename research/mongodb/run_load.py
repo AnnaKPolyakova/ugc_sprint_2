@@ -8,7 +8,7 @@ from research.mongodb.data_lists_generators import (
     get_bookmark_list_of_dict,
     get_movie_ratings_list_of_dict,
 )
-from research.test_settings import NUMBER_OF_OBJECTS_TO_LOAD_BY_INSERTION
+from research.settings_for_testing import NUMBER_OF_OBJECTS_TO_LOAD_BY_INSERTION
 from research.utils import dictConfig  # noqa: F401
 
 

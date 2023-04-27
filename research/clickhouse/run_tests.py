@@ -8,7 +8,7 @@ from research.clickhouse.data_lists_generators import (
     get_bookmark_list,
     get_movie_ratings_list,
 )
-from research.test_settings import USER_ID
+from research.settings_for_testing import USER_ID
 from research.utils import dictConfig  # noqa: F401
 from research.utils import measure_time
 
