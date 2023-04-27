@@ -9,7 +9,7 @@ class IDMixin(BaseModel):
 
 
 class CreateAtMixin(BaseModel):
-    create_at: str = datetime.now()
+    create_at: datetime = datetime.now()
 
 
 class Status(BaseModel):
