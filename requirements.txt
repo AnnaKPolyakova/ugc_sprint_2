@@ -87,4 +87,3 @@ wrapt==1.15.0
 zipp==3.15.0
 zope.event==4.6
 zope.interface==6.0
-clickhouse_driver==0.2.5

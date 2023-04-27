@@ -21,10 +21,6 @@ class BookmarkAPI(MethodView):
     @authentication_required
     @action_app_doc.validate(
         tags=["bookmark"],
-        resp=Response(
-            HTTP_200=(list[Bookmark], "add/update rating"),
-            HTTP_400=(Status, "Error")
-        ),
     )
     @jwt_required()
     def get(self):

@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from functools import wraps
 from http import HTTPStatus
+from typing import Union
 
 import requests
 from bson import ObjectId
@@ -37,6 +38,6 @@ class AppJSONEncoder(json.JSONEncoder):
         return super().default(o)
 
 
-def get_json(obj: dict):
+def get_json(obj: Union[dict, list]):
     json_document_str = json.dumps(obj, cls=AppJSONEncoder)
     return json.loads(json_document_str)
