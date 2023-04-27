@@ -24,7 +24,8 @@ class Settings(BaseSettings):
     log_level: str = Field(env="LOG_LEVEL", default='INFO')
     db_name: str = Field(env="DB_NAME", default='actions_db')
     movie_rating_collection: str = Field(
-        env="RATING_COLLECTION", default='movie_rating')
+        env="RATING_COLLECTION", default='movie_rating'
+    )
     review_rating_collection: str = Field(
         env="REVIEW_RATING_COLLECTION",
         default='movie_review'
@@ -57,4 +58,3 @@ class Settings(BaseSettings):
 
 
 app_settings = Settings()
-

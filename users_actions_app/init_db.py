@@ -2,7 +2,9 @@ from pymongo import MongoClient
 
 from users_actions_app.settings import app_settings
 
-mongodb_client: MongoClient = MongoClient(app_settings.mongo_host, app_settings.mongo_port)
+mongodb_client: MongoClient = MongoClient(
+    app_settings.mongo_host, app_settings.mongo_port
+)
 
 
 def mongodb_init(client):
