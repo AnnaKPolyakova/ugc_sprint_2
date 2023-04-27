@@ -34,7 +34,7 @@ GitPython==3.1.31
 greenlet==2.0.2
 gunicorn==20.1.0
 idna==3.4
-importlib-metadata==4.3.0
+importlib-metadata==4.2.0
 iniconfig==2.0.0
 isort==6.0.0b1
 itsdangerous==2.1.2
