@@ -8,7 +8,9 @@ from research.clickhouse.data_lists_generators import (
     get_bookmark_list,
     get_movie_ratings_list,
 )
-from research.settings_for_testing import NUMBER_OF_OBJECTS_TO_LOAD_BY_INSERTION
+from research.settings_for_testing import (
+    NUMBER_OF_OBJECTS_TO_LOAD_BY_INSERTION
+)
 from research.utils import dictConfig  # noqa: F401
 
 
