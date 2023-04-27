@@ -1,0 +1,22 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/*
+  json:
+    keys_under_root: true
+    add_error_key: true
+  tags: ['nginx']
+
+- type: log
+  enabled: true
+  paths:
+    - /users_actions_app/logs/*
+  json:
+    keys_under_root: true
+    add_error_key: true
+  tags: ['users_actions_app']
+
+output.logstash:
+  enabled: true
+  hosts: ["logstash:5045"]
