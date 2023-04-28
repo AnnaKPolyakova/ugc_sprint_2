@@ -40,7 +40,8 @@ mongodb
 * `docker-compose up -d --build`
 * `docker-compose -f docker-compose-logging.yml up -d --build`
 * `docker-compose -f docker-compose-mongo.yml up -d --build`
-
+* `chmod +x mongo/entrypoint.sh` - делаем файл исполняемым
+* `mongo/entrypoint.sh - запускаем` создание таблиц на шардах
 
 Для остановки контейнера:  
 * `docker-compose down --rmi all --volumes`
@@ -53,6 +54,8 @@ mongodb
 * `docker-compose -f docker-compose-logging.yml up -d --build`
 * `docker-compose -f docker-compose-mongo.yml up -d --build`
 * `python -m users_actions_app.app`
+* `chmod +x mongo/entrypoint.sh` - делаем файл исполняемым
+* `mongo/entrypoint.sh - запускаем` создание таблиц на шардах
 
 Для остановки контейнера:  
 * `docker-compose -f docker-compose-logging.yml down --rmi all --volumes`
