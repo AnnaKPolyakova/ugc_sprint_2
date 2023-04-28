@@ -19,7 +19,7 @@ class BookmarkService:
 
     @staticmethod
     def _get_fields(fields, user_id):
-        if isinstance(fields, dict):
+        if not isinstance(fields, dict):
             return
         fields["user_id"] = user_id
         return fields
@@ -35,10 +35,12 @@ class BookmarkService:
         filter_obj = {
             "user_id": self.user_id, "movie_id": self.dict.get("movie_id", "")
         }
+        self.collection.update_one(
+            filter_obj,
+            {"$set": {}},
+            upsert=True
+        )
         obj = self.collection.find_one(filter_obj)
-        if obj is None:
-            self.collection.insert_one(self.dict)
-            obj = self.collection.find_one(self.dict)
         return obj
 
     def dell_obj(self):

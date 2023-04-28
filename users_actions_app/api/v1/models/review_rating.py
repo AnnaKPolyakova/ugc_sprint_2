@@ -11,7 +11,7 @@ class ReviewRatingValidate(BaseModel):
 
     @validator("rating")
     def value_must_be_within_range(cls, value):  # noqa: WPS110, N805
-        if value not in (0, 10):
+        if value not in (1, 10):
             raise ValueError("value must be 1 or 10")
         return value
 
