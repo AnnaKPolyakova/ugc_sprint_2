@@ -35,7 +35,7 @@ class TestSettings(BaseSettings):
     bookmark_collection: str = Field(
         env="BOOKMARK_COLLECTION", default="bookmark"
     )
-    mongo_host: str = Field(env="MONGO_HOST", default="mongos1")
+    mongo_host: str = Field(env="MONGO_HOST", default="localhost")
     mongo_port: int = Field(env="MONGO_PORT", default=27017)
     auth_host: str = Field(
         env="AUTH_HOST",

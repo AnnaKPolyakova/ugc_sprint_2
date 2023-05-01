@@ -43,7 +43,7 @@ class Settings(BaseSettings):
     )
     mongo_host: str = Field(
         env="MONGO_HOST",
-        default='mongos1'
+        default='localhost'
     )
     mongo_port: int = Field(env="MONGO_PORT", default=27017)
     auth_host: str = Field(
