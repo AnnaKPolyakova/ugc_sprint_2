@@ -65,6 +65,13 @@ mongodb
 http://127.0.0.1:8080/v1/doc/redoc/ или  
 http://127.0.0.1:8080/v1/doc/swagger/
 
+
+### Тесты
+
+Создаем в корне .env_test и добавляем в него необходимые переменные  
+Пример в .env_test.example - для запуска приложения целиком в docker  
+Пример в .env_test.example-local - для запуска приложения локально и частично в docker
+
 #### Запуск тестов частично в контейнерах docker
 
 * `docker-compose -f tests/functional/docker-compose-test-local.yml up -d --build`

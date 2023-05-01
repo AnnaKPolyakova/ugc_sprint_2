@@ -14,8 +14,10 @@ from tests.functional.utils.factories import (
     MovieReviewFactory,
     ReviewRatingFactory,
 )
-from tests.functional.utils.mock import mock_authentication_required_decorator, \
+from tests.functional.utils.mock import (
+    mock_authentication_required_decorator,
     mock_mongodb_init
+)
 
 OBJ_COUNT = 2
 TEST_FOR_TOKEN = "test_for_token"
