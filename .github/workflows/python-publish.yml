@@ -14,10 +14,45 @@ jobs:
 
     runs-on: ubuntu-latest
     services:
-      mongodb:
+      mongors1n1:
         image: mongo
+        options: --name mongors1n1 --restart always --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
         ports:
           - 27017:27017
+        volumes:
+          - /etc/localtime:/etc/localtime:ro
+          - /tmp/mongo_cluster/data1:/data/db
+      mongors1n2:
+        image: mongo
+        options: --name mongors1n2 --restart always --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+        ports:
+          - 27027:27017
+        volumes:
+          - /etc/localtime:/etc/localtime:ro
+          - /tmp/mongo_cluster/data2:/data/db
+      mongors2n1:
+        image: mongo
+        options: --name mongors2n1 --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+        ports:
+          - 27047:27017
+        volumes:
+          - /etc/localtime:/etc/localtime:ro
+          - /tmp/mongo_cluster/data4:/data/db
+      mongors2n2:
+        image: mongo
+        options: --name mongors2n2 --restart always --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+        ports:
+          - 27057:27017
+        volumes:
+          - /etc/localtime:/etc/localtime:ro
+          - /tmp/mongo_cluster/data5:/data/db
+      mongos1:
+        image: mongo
+        options: --name mongos1 --restart always --configdb mongors1conf/mongocfg1:27017 --port 27017 --bind_ip_all
+        ports:
+          - 27019:27017
+        volumes:
+          - /etc/localtime:/etc/localtime:ro
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
