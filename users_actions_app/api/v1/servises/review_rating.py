@@ -1,5 +1,7 @@
 from typing import Optional
 
+from bson import ObjectId
+
 from users_actions_app.api.v1.models.movie_rating import (
     LikeDislike, MovieRatingCreate
 )
@@ -30,13 +32,14 @@ class ReviewRatingService:
         if self.fields:
             obj = ReviewRatingCreate(**self.fields)
             self.dict = obj.dict()
+            self.dict["review_id"] = ObjectId(self.dict["review_id"])
             return obj
         return None
 
     def save_obj_to_db(self):
         filter_obj = {
             "user_id": self.user_id,
-            "review_id": self.dict.get("review_id", "")
+            "review_id": ObjectId(self.dict.get("review_id", ""))
         }
         new_values = {
             "rating": self.dict["rating"], "create_at": self.dict["create_at"]
@@ -55,13 +58,17 @@ class ReviewRatingService:
 
     def get_rating_info(self):
         likes = self.collection.count_documents(
-            {"rating": 10, "review_id": self.review_id}
+            {"rating": 10, "review_id": ObjectId(self.review_id)}
         )
         dislikes = self.collection.count_documents(
-            {"rating": 1, "review_id": self.review_id}
+            {"rating": 1, "review_id": ObjectId(self.review_id)}
         )
+        if likes + dislikes == 0:
+            average_value = 0
+        else:
+            average_value = ((likes * 10) + dislikes) / (likes + dislikes)
         return LikeDislike(
             likes=likes,
             dislikes=dislikes,
-            average_value=((likes * 10) + dislikes) / (likes + dislikes),
+            average_value=average_value,
         ).dict()

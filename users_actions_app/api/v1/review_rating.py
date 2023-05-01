@@ -44,7 +44,7 @@ class ReviewRatingAPI(MethodView):
         logging.debug(
             "ReviewRatingAPI {name} end".format(name=self.get.__name__)
         )
-        return info.dict(), HTTPStatus.OK
+        return info, HTTPStatus.OK
 
     @authentication_required
     @action_app_doc.validate(
@@ -77,7 +77,7 @@ class ReviewRatingAPI(MethodView):
 @authentication_required
 @review_rating_api.route("/<path:review_id>/", methods=["DELETE"])
 @action_app_doc.validate(
-    tags=["rating"],
+    tags=["review_rating"],
     resp=Response(
         HTTP_204=(Status, "dell rating"), HTTP_400=(Status, "Error")
     ),

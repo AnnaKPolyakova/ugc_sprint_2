@@ -64,3 +64,17 @@ mongodb
 Документация по адресу:
 http://127.0.0.1:8080/v1/doc/redoc/ или  
 http://127.0.0.1:8080/v1/doc/swagger/
+
+#### Запуск тестов частично в контейнерах docker
+
+* `docker-compose -f tests/functional/docker-compose-test-local.yml up -d --build`
+
+Для остановки контейнера:  
+* `docker-compose -f tests/functional/docker-compose-test-local.yml down --rmi all --volumes`
+
+#### Запуск тестов в контейнерах docker
+
+* `docker-compose -f tests/functional/docker-compose-test.yml up -d --build`
+
+Для остановки контейнера:  
+* `docker-compose -f tests/functional/docker-compose-test.yml down --rmi all --volumes`

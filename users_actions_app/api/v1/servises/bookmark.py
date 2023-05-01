@@ -40,8 +40,7 @@ class BookmarkService:
             {"$set": {}},
             upsert=True
         )
-        obj = self.collection.find_one(filter_obj)
-        return obj
+        return self.collection.find_one(filter_obj)
 
     def dell_obj(self):
         self.collection.delete_many(

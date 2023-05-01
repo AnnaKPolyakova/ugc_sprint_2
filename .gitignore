@@ -16,3 +16,4 @@ docker
 .idea/
 /auth_proxy_app/storage/
 /.mypy_cache/
+/.env_test

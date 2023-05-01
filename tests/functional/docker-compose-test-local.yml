@@ -1,0 +1,108 @@
+version: '3.0'
+
+services:
+  mongors1n1:
+    container_name: mongors1n1
+    restart: always
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    ports:
+      - 27017:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /tmp/mongo_cluster/data1:/data/db
+    networks:
+      - moves_network
+
+  mongors1n2:
+    container_name: mongors1n2
+    restart: always
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    ports:
+      - 27027:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /tmp/mongo_cluster/data2:/data/db
+    networks:
+      - moves_network
+
+  mongors2n1:
+    container_name: mongors2n1
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    ports:
+      - 27047:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /tmp/mongo_cluster/data4:/data/db
+    networks:
+      - moves_network
+
+  mongors2n2:
+    container_name: mongors2n2
+    restart: always
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    ports:
+      - 27057:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /tmp/mongo_cluster/data5:/data/db
+    networks:
+      - moves_network
+
+  mongos1:
+    container_name: mongos1
+    restart: always
+    image: mongo
+    depends_on:
+      - mongocfg1
+    command: mongos --configdb mongors1conf/mongocfg1:27017 --port 27017 --bind_ip_all
+    ports:
+      - 27019:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - moves_network
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongos1:27017/
+    links:
+      - mongos1
+    networks:
+      - moves_network
+
+  mongocfg1:
+    container_name: mongocfg1
+    restart: always
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /tmp/mongo_cluster/config1:/data/db
+    networks:
+      - moves_network
+
+networks:
+  moves_network:
+    name: moves_network
+    external: true

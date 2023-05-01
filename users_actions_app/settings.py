@@ -19,7 +19,10 @@ class Settings(BaseSettings):
                 'ingest.sentry.io/4504972194873344'
     )
     log_file: str = Field(
-        env="LOG_FILE", default='../logs/users_actions_app/app.json'
+        env="LOG_FILE", default='app.json'
+    )
+    log_dir: str = Field(
+        env="LOG_DIR", default='../logs/users_actions_app/'
     )
     log_level: str = Field(env="LOG_LEVEL", default='INFO')
     db_name: str = Field(env="DB_NAME", default='actions_db')
