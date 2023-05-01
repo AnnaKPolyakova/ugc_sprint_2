@@ -2,6 +2,7 @@ import datetime as dt
 import json
 import logging
 from logging.config import dictConfig
+from os import makedirs
 
 import sentry_sdk
 from flask import Flask, request
@@ -11,7 +12,6 @@ from users_actions_app.api.v1.bookmark import bookmark_api
 from users_actions_app.api.v1.movie_rating import movie_rating_api
 from users_actions_app.api.v1.review import review_api
 from users_actions_app.api.v1.review_rating import review_rating_api
-from users_actions_app.api.v1.test import test_api
 from users_actions_app.init_db import mongodb_client, mongodb_init
 from users_actions_app.settings import app_settings
 from users_actions_app.utils import action_app_doc
@@ -38,7 +38,10 @@ class RequestIdFilter(logging.Filter):
         return True
 
 
-def create_action_app():
+def create_action_app(settings):
+    log_dir = settings.log_dir
+    log_file = log_dir + settings.log_file
+    makedirs(log_dir, exist_ok=True)
     dictConfig({
         'version': 1,
         'disable_existing_loggers': False,
@@ -58,15 +61,15 @@ def create_action_app():
         'handlers': {
             'file': {
                 'class': 'logging.FileHandler',
-                'filename': app_settings.log_file,
-                'level': "DEBUG",
+                'filename': log_file,
+                'level': settings.log_level,
                 'formatter': 'standard',
                 'filters': ['app_filter'],
             },
             'console':
                 {
                     "class": "logging.StreamHandler",
-                    'level': "DEBUG",
+                    'level': settings.log_level,
                     'formatter': 'simple',
                 }
         },
@@ -76,13 +79,12 @@ def create_action_app():
         'loggers': {
             '': {
                 'handlers': ['file'],
-                'level': app_settings.log_level,
+                'level': settings.log_level,
                 'propagate': True,
             },
         },
     })
     current_app = Flask(__name__)
-    current_app.register_blueprint(test_api, url_prefix="/")
     current_app.register_blueprint(
         movie_rating_api, url_prefix="/api/v1/movie_rating"
     )
@@ -95,12 +97,12 @@ def create_action_app():
     current_app.config["JWT_TOKEN_LOCATION"] = ["headers"]
     current_app.config["JWT_HEADER_NAME"] = "Authorization"
     current_app.config["JWT_HEADER_TYPE"] = "Bearer"
-    current_app.config["JWT_SECRET_KEY"] = app_settings.jwt_secret_key
+    current_app.config["JWT_SECRET_KEY"] = settings.jwt_secret_key
     JWTManager(current_app)
-    mongodb_init(mongodb_client)
+    mongodb_init(mongodb_client, settings)
     return current_app
 
 
 if __name__ == "__main__":
-    app = create_action_app()
+    app = create_action_app(app_settings)
     app.run(port=5000)

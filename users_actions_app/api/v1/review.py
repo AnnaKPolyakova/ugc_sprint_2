@@ -22,7 +22,7 @@ review_api = Blueprint("review", __name__)
 class ReviewAPI(MethodView):
     @authentication_required
     @action_app_doc.validate(
-        tags=["user"],
+        tags=["review"],
         json=MovieReviewValidate,
         resp=Response(
             HTTP_201=(MovieReview, "add/update rating"),

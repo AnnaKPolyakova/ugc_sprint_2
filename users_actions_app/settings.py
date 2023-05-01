@@ -19,7 +19,10 @@ class Settings(BaseSettings):
                 'ingest.sentry.io/4504972194873344'
     )
     log_file: str = Field(
-        env="LOG_FILE", default='../logs/users_actions_app/app.json'
+        env="LOG_FILE", default='app.json'
+    )
+    log_dir: str = Field(
+        env="LOG_DIR", default='../logs/users_actions_app/'
     )
     log_level: str = Field(env="LOG_LEVEL", default='INFO')
     db_name: str = Field(env="DB_NAME", default='actions_db')
@@ -42,7 +45,7 @@ class Settings(BaseSettings):
         env="MONGO_HOST",
         default='localhost'
     )
-    mongo_port: int = Field(env="MONGO_PORT", default=27019)
+    mongo_port: int = Field(env="MONGO_PORT", default=27017)
     auth_host: str = Field(
         env="AUTH_HOST",
         default="http://127.0.0.1:8001/api/v1/users/auth_check/"

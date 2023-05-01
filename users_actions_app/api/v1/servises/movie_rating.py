@@ -9,7 +9,7 @@ from users_actions_app.settings import app_settings
 
 class MovieRatingService:
     def __init__(self, fields=None, user_id=None, movie_id=None):
-        self.fields: Optional[dict] = fields
+        self.fields: Optional[dict] = self._get_fields(fields, user_id)
         self.dict: dict = dict()
         self.user_id: Optional[str] = user_id
         self.movie_id: Optional[str] = movie_id
@@ -17,6 +17,13 @@ class MovieRatingService:
         self.collection = mongodb_client[app_settings.db_name][
             app_settings.movie_rating_collection
         ]
+
+    @staticmethod
+    def _get_fields(fields, user_id):
+        if not isinstance(fields, dict):
+            return
+        fields["user_id"] = user_id
+        return fields
 
     def _create_base_obj(self):
         if self.fields:
@@ -28,13 +35,12 @@ class MovieRatingService:
     def save_obj_to_db(self):
         data = self.dict
         filter_obj = {"user_id": self.user_id, "movie_id": data["movie_id"]}
-        new_values = {
-            "$set": {"rating": data["rating"], "create_at": data["create_at"]}
-        }
-        action_result = self.collection.update_one(filter_obj, new_values)
-        data["user_id"] = self.user_id
-        if action_result.matched_count == 0:
-            self.collection.insert_one(data)
+        new_values = {"rating": data["rating"], "create_at": data["create_at"]}
+        self.collection.update_one(
+            filter_obj,
+            {"$set": new_values},
+            upsert=True
+        )
         return self.collection.find_one(data)
 
     def find_rating(self, movie_id):

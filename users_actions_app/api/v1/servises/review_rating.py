@@ -12,7 +12,7 @@ from users_actions_app.settings import app_settings
 
 class ReviewRatingService:
     def __init__(self, fields=None, user_id=None, review_id=None):
-        self.fields: Optional[dict] = fields
+        self.fields: Optional[dict] = self._get_fields(fields, user_id)
         self.dict: dict = dict()
         self.user_id: Optional[str] = user_id
         self.review_id: Optional[str] = review_id
@@ -21,28 +21,35 @@ class ReviewRatingService:
             app_settings.review_rating_collection
         ]
 
+    @staticmethod
+    def _get_fields(fields, user_id):
+        if not isinstance(fields, dict):
+            return
+        fields["user_id"] = user_id
+        return fields
+
     def _create_base_obj(self):
         if self.fields:
             obj = ReviewRatingCreate(**self.fields)
             self.dict = obj.dict()
+            self.dict["review_id"] = ObjectId(self.dict["review_id"])
             return obj
         return None
 
     def save_obj_to_db(self):
-        data = self.dict
         filter_obj = {
             "user_id": self.user_id,
-            "review_id": data.get("review_id", "")
+            "review_id": ObjectId(self.dict.get("review_id", ""))
         }
         new_values = {
-            "$set": {"rating": data["rating"], "create_at": data["create_at"]}
+            "rating": self.dict["rating"], "create_at": self.dict["create_at"]
         }
-        result = self.collection.update_one(filter_obj, new_values)
-        data["user_id"] = self.user_id
-        data["review_id"] = ObjectId(data["review_id"])
-        if result.matched_count == 0:
-            self.collection.insert_one(data)
-        return self.collection.find_one(data)
+        self.collection.update_one(
+            filter_obj,
+            {"$set": new_values},
+            upsert=True
+        )
+        return self.collection.find_one(self.dict)
 
     def dell_obj(self):
         self.collection.delete_many(
@@ -51,13 +58,17 @@ class ReviewRatingService:
 
     def get_rating_info(self):
         likes = self.collection.count_documents(
-            {"rating": 10, "review_id": self.review_id}
+            {"rating": 10, "review_id": ObjectId(self.review_id)}
         )
         dislikes = self.collection.count_documents(
-            {"rating": 1, "review_id": self.review_id}
+            {"rating": 1, "review_id": ObjectId(self.review_id)}
         )
+        if likes + dislikes == 0:
+            average_value = 0
+        else:
+            average_value = ((likes * 10) + dislikes) / (likes + dislikes)
         return LikeDislike(
             likes=likes,
             dislikes=dislikes,
-            average_value=((likes * 10) + dislikes) / (likes + dislikes),
+            average_value=average_value,
         ).dict()

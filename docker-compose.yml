@@ -3,23 +3,13 @@ services:
     users_actions_app:
       build:
         context: .
-#        dockerfile: ./Dockerfile
       ports:
         - "5000:5000"
       volumes:
-#        - ./users_actions_app:/code
         - ./logs/users_actions_app:/users_actions_app/logs
-#        - ./users_actions_app/logs:/users_actions_app/logs
-      #        - static_value:/code/static/
-#        - media_value:/code/media/
       command: gunicorn users_actions_app.wsgi_app:app --bind 0.0.0.0:5000  --reload
       networks:
         - moves_network
-#      logging:
-#        driver: gelf
-#        options:
-#          gelf-address: udp://127.0.0.1:5044
-#          tag: users_actions_app
 
     nginx:
       image: nginx:1.19.2
@@ -27,11 +17,6 @@ services:
         - /tmp/logs/nginx/:/var/log/nginx/
         - ./deploy/etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
         - ./deploy/etc/nginx/conf.d:/etc/nginx/conf.d:ro
-#      logging:
-#        driver: gelf
-#        options:
-#          gelf-address: udp://127.0.0.1:5044
-#          tag: 'nginx'
 
       depends_on:
         - users_actions_app
@@ -54,11 +39,6 @@ services:
         - logstash
       networks:
         - moves_network
-#      command: ["filebeat", "-e"]
-
-#volumes:
-#  static_value:
-#  media_value:
 
 networks:
   moves_network:

@@ -40,7 +40,8 @@ mongodb
 * `docker-compose up -d --build`
 * `docker-compose -f docker-compose-logging.yml up -d --build`
 * `docker-compose -f docker-compose-mongo.yml up -d --build`
-
+* `chmod +x mongo/entrypoint.sh` - делаем файл исполняемым
+* `mongo/entrypoint.sh - запускаем` создание таблиц на шардах
 
 Для остановки контейнера:  
 * `docker-compose down --rmi all --volumes`
@@ -53,6 +54,8 @@ mongodb
 * `docker-compose -f docker-compose-logging.yml up -d --build`
 * `docker-compose -f docker-compose-mongo.yml up -d --build`
 * `python -m users_actions_app.app`
+* `chmod +x mongo/entrypoint.sh` - делаем файл исполняемым
+* `mongo/entrypoint.sh - запускаем` создание таблиц на шардах
 
 Для остановки контейнера:  
 * `docker-compose -f docker-compose-logging.yml down --rmi all --volumes`
@@ -61,3 +64,24 @@ mongodb
 Документация по адресу:
 http://127.0.0.1:8080/v1/doc/redoc/ или  
 http://127.0.0.1:8080/v1/doc/swagger/
+
+
+### Тесты
+
+Создаем в корне .env_test и добавляем в него необходимые переменные  
+Пример в .env_test.example - для запуска приложения целиком в docker  
+Пример в .env_test.example-local - для запуска приложения локально и частично в docker
+
+#### Запуск тестов частично в контейнерах docker
+
+* `docker-compose -f tests/functional/docker-compose-test-local.yml up -d --build`
+
+Для остановки контейнера:  
+* `docker-compose -f tests/functional/docker-compose-test-local.yml down --rmi all --volumes`
+
+#### Запуск тестов в контейнерах docker
+
+* `docker-compose -f tests/functional/docker-compose-test.yml up -d --build`
+
+Для остановки контейнера:  
+* `docker-compose -f tests/functional/docker-compose-test.yml down --rmi all --volumes`

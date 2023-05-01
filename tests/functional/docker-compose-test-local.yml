@@ -1,0 +1,16 @@
+version: '3.0'
+
+services:
+  mongodb:
+    container_name: mongos1
+    restart: always
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - moves_network
+
+networks:
+  moves_network:
+    name: moves_network
+    external: true
