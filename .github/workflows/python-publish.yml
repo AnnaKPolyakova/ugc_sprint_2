@@ -16,7 +16,6 @@ jobs:
     services:
       mongodb:
         image: mongo
-        container_name: mongos1
         ports:
           - 27017:27017
     steps:
