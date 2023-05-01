@@ -14,7 +14,8 @@ from tests.functional.utils.factories import (
     MovieReviewFactory,
     ReviewRatingFactory,
 )
-from tests.functional.utils.mock import mock_authentication_required_decorator
+from tests.functional.utils.mock import mock_authentication_required_decorator, \
+    mock_mongodb_init
 
 OBJ_COUNT = 2
 TEST_FOR_TOKEN = "test_for_token"
@@ -23,6 +24,10 @@ ERROR_INFO = (
     "Проверьте, что при {method} запросе {url} возвращается статус {status}"
 )
 
+patch(
+    "users_actions_app.init_db.mongodb_init",
+    mock_mongodb_init
+).start()
 patch(
     "users_actions_app.api.utils.authentication_required",
     mock_authentication_required_decorator,
