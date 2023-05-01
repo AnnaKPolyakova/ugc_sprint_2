@@ -12,7 +12,6 @@ from users_actions_app.api.v1.bookmark import bookmark_api
 from users_actions_app.api.v1.movie_rating import movie_rating_api
 from users_actions_app.api.v1.review import review_api
 from users_actions_app.api.v1.review_rating import review_rating_api
-from users_actions_app.api.v1.test import test_api
 from users_actions_app.init_db import mongodb_client, mongodb_init
 from users_actions_app.settings import app_settings
 from users_actions_app.utils import action_app_doc
@@ -86,7 +85,6 @@ def create_action_app(settings):
         },
     })
     current_app = Flask(__name__)
-    current_app.register_blueprint(test_api, url_prefix="/")
     current_app.register_blueprint(
         movie_rating_api, url_prefix="/api/v1/movie_rating"
     )
