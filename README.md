@@ -12,7 +12,7 @@ Testing mongodb
 Technologies and requirements:
 ```
 Python 3.9+
-mongodb
+mongodb 
 ```
 ### Docker Settings
 
